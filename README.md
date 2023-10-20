@@ -1,6 +1,6 @@
 # flutter_script_siamna
 
-A new Flutter project.
+UBUNTU (aws) EC2/LIGHTSAIL instance a, apache2 mariadb php auto-installation for laravel general project script generate-na
 
 ## Getting Started
 
