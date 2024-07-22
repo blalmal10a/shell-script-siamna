@@ -4,7 +4,7 @@ final app_name = 'filament'.obs;
 final mariadb_password = 'watoke'.obs;
 final git_url = 'https://github.com/filamentphp/demo.git'.obs;
 final git_token = ''.obs;
-final php_extensions = 'intl mbstring gd dom xml curl zip mysq'.obs;
+final php_extensions = 'intl mbstring gd dom xml curl zip mysql'.obs;
 final domain_name = '000-default'.obs;
 // String get resultantScript => '''
 
@@ -44,7 +44,7 @@ add-apt-repository -y ppa:ondrej/php
 apt-get update -y
 apt-get install -y php8.2
 
-for ext in \${PHP_EXTENSIONS_LIST//,/ }
+for ext in \$(echo \$PHP_EXTENSIONS_LIST | tr ',' ' ')
 do
   apt-get install -y php8.2-"\$ext"
 done
