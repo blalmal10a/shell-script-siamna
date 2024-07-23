@@ -21,6 +21,8 @@ PROJECTNAME="$app_name"
 GITHUB_URL="$git_url"
 GIT_TOKEN="$git_token"
 
+# Use sed to remove https://
+GITHUB_URL=\$(echo "\$GITHUB_URL" | sed 's/https:\\/\\///')
 # Specify your PHP extensions list
 PHP_EXTENSIONS_LIST="$php_extensions"
 
