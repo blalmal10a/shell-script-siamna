@@ -1,14 +1,12 @@
 import 'package:get/get.dart';
 
-final app_name = 'filament'.obs;
+final app_name = 'KawnekTemplate'.obs;
 final mariadb_password = 'watoke'.obs;
-final git_url = 'https://github.com/filamentphp/demo.git'.obs;
+final git_url =
+    'https://github.com/blalmal10a/laravel11-filament3-template'.obs;
 final git_token = ''.obs;
-final php_extensions = 'intl mbstring gd dom xml curl zip mysql'.obs;
+final php_extensions = 'intl,mbstring,gd,dom,xml,curl,zip,mysql'.obs;
 final domain_name = '000-default'.obs;
-// String get resultantScript => '''
-
-// ''';
 
 String get autoInstallScript => """
 cat << 'EOF' > auto-install.sh
@@ -36,9 +34,10 @@ apt-get update -y
 apt-get install -y apache2 mariadb-server
 
 # Create a new MariaDB user with the specified username and password
-mysql -e "CREATE USER '$app_name'@'localhost' IDENTIFIED BY '$mariadb_password';"
-mysql -e "GRANT ALL PRIVILEGES ON *.* TO '$app_name'@'localhost';"
+mysql -e "CREATE USER '\$PROJECTNAME'@'localhost' IDENTIFIED BY '$mariadb_password';"
+mysql -e "GRANT ALL PRIVILEGES ON *.* TO '\$PROJECTNAME'@'localhost';"
 mysql -e "FLUSH PRIVILEGES;"
+mysql -e "CREATE DATABASE \$PROJECTNAME;"
 
 # Install PHP 8.2 and the specified PHP extensions
 apt-get install -y software-properties-common
@@ -64,11 +63,15 @@ fi
 
 # Navigate to the project directory and execute composer install and php artisan key:generate, storage:link
 cd /var/www/\$PROJECTNAME && \\
-composer install --no-interaction && \\
-cp .env.example .env && \\
-sed -i "s/DB_USERNAME=root/DB_USERNAME=$app_name/g" .env && \\
+# cp .env.example .env && \\
+
+curl -s https://raw.githubusercontent.com/blalmal10a/laravel11-filament3-template/main/.env.example > .env
+sed -i "s/DB_USERNAME=root/DB_USERNAME=\$PROJECTNAME/g" .env && \\
 sed -i "s/DB_PASSWORD=/DB_PASSWORD=$mariadb_password/g" .env && \\
-sed -i "s/DB_CONNECTION=\\`.*\\`/DB_CONNECTION=mysql/g" .env && \\
+sed -i "s/DB_CONNECTION=\\(.*\\)/DB_CONNECTION=mysql/g" .env && \\
+sed -i "s/DB_DATABASE=\\(.*\\)/DB_DATABASE=\$PROJECTNAME/g" .env && \\
+chmod -R 777 storage
+composer install --no-interaction && \\
 php artisan key:generate && \\
 php artisan storage:link
 php artisan migrate:fresh --seed

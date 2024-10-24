@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
                       decoration: InputDecoration(
                         labelText: 'App Name',
                       ),
-                      controller: TextEditingController(text: 'filament'),
+                      controller: TextEditingController(text: 'KawnekTemplate'),
                       onChanged: (value) {
                         var snakeValue = ReCase(value).snakeCase;
                         if (RegExp(r'^[0-9]').hasMatch(snakeValue)) {
@@ -43,7 +43,8 @@ class HomePage extends StatelessWidget {
                             RegExp(r'(http|https):\/\/'), '');
                       },
                       controller: TextEditingController(
-                          text: 'https://github.com/filamentphp/demo.git'),
+                          text:
+                              'https://github.com/blalmal10a/laravel11-filament3-template'),
                     ),
                     TextFormField(
                       decoration: InputDecoration(labelText: 'Git token'),
@@ -58,7 +59,7 @@ class HomePage extends StatelessWidget {
                     TextFormField(
                       decoration: InputDecoration(labelText: 'PHP EXTENSIONS'),
                       controller: TextEditingController(
-                          text: 'intl mbstring gd dom xml curl zip mysq'),
+                          text: 'intl,mbstring,gd,dom,xml,curl,zip,mysql'),
                       onChanged: (value) => php_extensions.value = value,
                     ),
                     TextFormField(
